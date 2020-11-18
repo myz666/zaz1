@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myz.fileService.mapper.FileinfoMapper">
+
+<!--    <select id="getByMyzId" resultType="com.myz.fileService.entity.Fileinfo">-->
+<!--        select  * from tab_fileinfo where id = ${id}-->
+<!--    </select>-->
+    <select id="getFilesDtoByFenLeiId" resultMap="FileDtoList">
+        select a.id,a.fileName,b.houzhui,a.fenleiId,a.filePath,a.miaoshu
+        from tab_fileinfo a,tab_houzhui b
+        where a.houzhuiId=b.id and a.fenleiId=${fenleiId};
+    </select>
+
+    <select id="getFilesDtoByLikeFileName" resultMap="FileDtoList">
+        select a.id,a.fileName,b.houzhui,a.fenleiId,a.filePath,a.miaoshu
+        from tab_fileinfo a,tab_houzhui b
+        where a.houzhuiId=b.id and a.fileName like CONCAT('%','${fileName}','%');
+    </select>
+
+    <resultMap id="FileDtoList" type="com.myz.fileService.entity.FileDto">
+        <id property="id" column="id"/>
+        <result property="fileName" column="fileName"></result>
+        <result property="houzhui" column="houzhui" />
+        <result property="fenleiId" column="fenleiId" />
+        <result property="filePath" column="filePath" />
+        <result property="miaoshu" column="miaoshu" />
+    </resultMap>
+
+
+</mapper>
